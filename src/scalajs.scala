@@ -10,16 +10,14 @@ object Scalajs {
   val scalajs_library = scalajs_home + Path.explode("lib/scalajs-library_2.13-1.20.1.jar")
 
   def compile_ir(output_dir: Path, progress: Progress = new Progress): Unit = {
-    val isa_component = Scala_Build.context(Path.explode("$ISABELLE_HOME"), component = true)
-    val deps = 
-      scalajs_library.java_path ::
-        isa_component.requirements.map(_.dir.java_path) :::
-        (for {
-          s <- setup.Environment.getenv("ISABELLE_CLASSPATH").split(":", -1).toList
-          if s.nonEmpty
-        } yield JPath.of(setup.Environment.platform_path(s)))
+    val deps = Classpath(List(scalajs_library.file)).jars.map(_.toPath)
 
-    val sources = isa_component.sources.filter(_.implode.contains("src/Pure/")).map(_.java_path)
+    val sources =
+      for {
+        source <- Scala_Build.context(Path.explode("$ISABELLE_HOME"), component = true).sources
+        if source.implode.contains("/src/Pure/")
+      } yield source.java_path
+  
     progress.echo("Generating IR for " + sources.length + " sources ...")
 
     val flags = "-scalajs -scalajs-genStaticForwardersForNonTopLevelObjects"
