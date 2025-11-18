@@ -3,6 +3,7 @@ module = $SCALAJS_HOME/lib/scalajs.jar
 requirements = \
   env:ISABELLE_SCALA_JAR
 sources = \
-  src/scalajs.scala
+  src/scalajs.scala \
+  src/scalajs_example.scala
 services = \
   isabelle.Scalajs_Tools
