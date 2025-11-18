@@ -1,0 +1,8 @@
+title = Isabelle/Scalajs
+module = $SCALAJS_HOME/lib/scalajs.jar
+requirements = \
+  env:ISABELLE_SCALA_JAR
+sources = \
+  src/scalajs.scala
+services = \
+  isabelle.Scalajs_Tools
