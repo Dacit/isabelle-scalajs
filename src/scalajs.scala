@@ -35,7 +35,7 @@ object Scalajs {
   val linker_config =
     StandardConfig()
       .withSemantics(Semantics.Defaults.optimized)
-      .withModuleKind(ModuleKind.ESModule)
+      .withModuleKind(ModuleKind.NoModule)
       .withModuleSplitStyle(ModuleSplitStyle.FewestModules)
       .withOutputPatterns(OutputPatterns.Defaults)
       .withESFeatures(ESFeatures.Defaults)
