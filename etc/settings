@@ -1,1 +1,4 @@
 SCALAJS_HOME="$COMPONENT"
+SCALAJS_DEPS_JAR="$SCALAJS_HOME/lib/scalajs-deps.jar"
+
+classpath "$SCALAJS_DEPS_JAR"
