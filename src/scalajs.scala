@@ -29,7 +29,7 @@ object Scalajs {
     val flags = "-scalajs -scalajs-genStaticForwardersForNonTopLevelObjects"
 
     setup.Build.compile_scala_sources(System.err, output_dir.java_path, flags, classpath.asJava,
-      sources.asJava)
+      ((scalajs_home + Path.explode("src/scalajs_example.scala")).java_path :: sources).asJava)
   }
 
   val linker_config =
@@ -64,7 +64,8 @@ object Scalajs {
         override def trace(t: => Throwable): Unit = throw t
       }
 
-    val link_path = (input_dir + Path.basic("isabelle")).java_path :: classpath
+    val link_path = input_dir.java_path :: classpath
+
     val futures = 
       for {
         containers <- PathIRContainer.fromClasspath(link_path)
@@ -80,10 +81,12 @@ object Scalajs {
   { args =>
     val progress = new Console_Progress(verbose = true)
 
+
     val output_dir = scalajs_home + Path.basic("output")
     val ir_dir = output_dir + Path.basic("ir")
     val js_dir = output_dir + Path.basic("js")
 
+    Isabelle_System.rm_tree(ir_dir)
     Isabelle_System.make_directory(ir_dir)
     Isabelle_System.make_directory(js_dir)
 
