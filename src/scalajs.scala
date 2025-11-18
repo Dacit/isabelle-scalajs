@@ -3,8 +3,7 @@ package isabelle
 
 import java.nio.file.{Path => JPath}
 import scala.jdk.CollectionConverters._
-import org.scalajs.linker.interface.{StandardConfig, Semantics, ESFeatures, ModuleKind,
-  ModuleSplitStyle, OutputPatterns}
+import org.scalajs.linker.interface._
 import org.scalajs.linker.{PathIRContainer, StandardImpl, PathOutputDirectory}
 import org.scalajs.logging
 import org.scalajs.logging.Level
@@ -26,7 +25,7 @@ object Scalajs {
   
     progress.echo("Generating IR for " + sources.length + " sources ...")
 
-    val flags = "-scalajs -scalajs-genStaticForwardersForNonTopLevelObjects"
+    val flags = "-scalajs"
 
     setup.Build.compile_scala_sources(System.err, output_dir.java_path, flags, classpath.asJava,
       ((scalajs_home + Path.explode("src/scalajs_example.scala")).java_path :: sources).asJava)
@@ -34,13 +33,13 @@ object Scalajs {
 
   val linker_config =
     StandardConfig()
-      .withSemantics(Semantics.Defaults.optimized)
+      .withSemantics(Semantics.Defaults.withModuleInit(CheckedBehavior.Unchecked))
       .withModuleKind(ModuleKind.NoModule)
       .withModuleSplitStyle(ModuleSplitStyle.FewestModules)
       .withOutputPatterns(OutputPatterns.Defaults)
       .withESFeatures(ESFeatures.Defaults)
       .withCheckIR(false)
-      .withOptimizer(true)
+      .withOptimizer(false)
       .withParallel(true)
       .withSourceMap(false)
       .withClosureCompiler(false)
@@ -79,7 +78,7 @@ object Scalajs {
 
   val isabelle_tool = Isabelle_Tool("scalajs", "test scalajs", Scala_Project.here, 
   { args =>
-    val progress = new Console_Progress(verbose = true)
+    val progress = new Console_Progress(verbose = false)
 
 
     val output_dir = scalajs_home + Path.basic("output")
