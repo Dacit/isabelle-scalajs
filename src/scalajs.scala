@@ -17,10 +17,11 @@ object Scalajs {
   val classpath = Classpath(List(scalajs_deps.file)).jars.map(_.toPath)
 
   def compile_ir(output_dir: Path, progress: Progress = new Progress): Unit = {
+    val home = Path.explode("$ISABELLE_HOME/src/Pure")
     val sources =
       for {
         source <- Scala_Build.context(Path.explode("$ISABELLE_HOME"), component = true).sources
-        if source.implode.contains("/src/Pure/")
+        if File.relative_path(home, source).isDefined
       } yield source.java_path
   
     progress.echo("Generating IR for " + sources.length + " sources ...")
