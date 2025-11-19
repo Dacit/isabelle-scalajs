@@ -34,7 +34,9 @@ object Scalajs {
 
   val linker_config =
     StandardConfig()
-      .withSemantics(Semantics.Defaults.withModuleInit(CheckedBehavior.Unchecked))
+      .withSemantics(Semantics.Defaults
+        .withModuleInit(CheckedBehavior.Unchecked)
+        .withAsInstanceOfs(CheckedBehavior.Unchecked))
       .withModuleKind(ModuleKind.NoModule)
       .withModuleSplitStyle(ModuleSplitStyle.FewestModules)
       .withOutputPatterns(OutputPatterns.Defaults)
