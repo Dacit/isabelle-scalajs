@@ -5,10 +5,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   </head>
   <body>
-    <div id="main">Placeholder</div>
+    <pre id="main">Placeholder</pre>
     <script type="text/javascript" src="output/js/main.js"></script>
     <script>
-      document.getElementById("main").innerText = Scalajs_Example.test;
+      function update() {
+        document.getElementById("main").innerText =
+          Scalajs_Example.pretty_formatted(window.innerWidth / 10)
+      }
+      onload = update
+      onresize = update
     </script>
   </body>
 </html>

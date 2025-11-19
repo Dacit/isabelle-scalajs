@@ -1,0 +1,20 @@
+# HG changeset patch
+# User Fabian Huch <huch@in.tum.de>
+# Date 1763569309 -3600
+#      Wed Nov 19 17:21:49 2025 +0100
+# Node ID df3b29effb39b4b96165a40a09a9a81fd2423dbf
+# Parent  1bbd2dc9b80e8bd4e041f5c3820fe41606d1a8ae
+experimental patch;
+
+diff -r 1bbd2dc9b80e -r df3b29effb39 src/Pure/General/exn.scala
+--- a/src/Pure/General/exn.scala        Mon Nov 17 13:30:05 2025 +0100
++++ b/src/Pure/General/exn.scala        Wed Nov 19 17:21:49 2025 +0100
+@@ -18,7 +18,7 @@
+       }
+     override def hashCode: Int = message.hashCode
+ 
+-    override def toString: String = "\n" + Output.error_message_text(message)
++    override def toString: String = "\n" + message //Output.error_message_text(message)
+   }
+ 
+   object ERROR {
